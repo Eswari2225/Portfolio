@@ -375,6 +375,43 @@ h2.st{margin-top:30px}
 @media(max-width:700px){.grthumb{display:none}.gr{margin:0 -8px;padding:12px 8px}.fcols{grid-template-columns:1fr}.gright #gshare{display:none}.glogo{display:none}.fab{padding:10px 14px;font-size:13px}.kpimgs{height:170px}#tabbrand small{display:none}.gtitle{font-size:18px}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 .gtabs a{flex:none}.fbot{padding-right:200px}@media(max-width:700px){.fbot{padding-right:14px;padding-bottom:110px}}
+
+/* ===== v4 : search engine UI, dock fix, a11y ===== */
+:focus-visible{outline:2px solid #8ab4f8;outline-offset:2px;border-radius:6px}
+input:focus-visible{outline:none}
+.hs:focus-within,.gsbox:focus-within{outline:2px solid #8ab4f8;outline-offset:2px}
+.noscroll #viewport{overflow:hidden}
+.kk{font-family:inherit;font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 7px;background:var(--card)}
+.gsbox:focus-within .kk,.hs:focus-within .kk{display:none}
+.sg.nores{cursor:default;color:var(--muted)}
+.sg:focus-visible{outline-offset:-2px}
+.lucky i{display:inline-block}
+.lucky.rolling i{animation:dice .6s ease}
+@keyframes dice{0%{transform:rotate(0)}60%{transform:rotate(540deg) scale(1.4)}100%{transform:rotate(720deg)}}
+.btn.lucky{background:linear-gradient(135deg,#fbbc05,#ea4335);color:#202124;border-color:transparent;font-weight:600}
+.btn.lucky.sm{padding:7px 12px;font-size:12px;border-radius:18px;margin-right:6px;white-space:nowrap}
+.qbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 6px;font-size:13px;color:var(--muted)}
+.cc{font-size:13px;color:var(--muted);font-weight:400}
+.noresult{text-align:center;padding:40px 16px;border:1px dashed var(--line);border-radius:18px;margin-top:10px;animation:pgin .4s}
+.noresult h2{font-size:20px;font-weight:500;margin:12px 0 6px}.noresult p{color:var(--muted);margin:0 0 14px}
+.nrh{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+.noresult .gchips{justify-content:center}
+.qchip{cursor:pointer;font-family:inherit}.qchip:hover{border-color:var(--accent);transform:translateY(-2px)}
+/* floating dock: one flex column, no overlaps */
+#dock{z-index:58;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));gap:10px;max-width:calc(100vw - 32px)}
+#totop{z-index:57;left:max(16px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom))}
+.fab{text-decoration:none;white-space:nowrap}
+.fab.wa{background:#25d366;color:#fff;animation:fabin .7s 1.3s both cubic-bezier(.3,1.5,.5,1)}
+.fab i{font-size:16px}.fab .chev{font-size:10px}
+#viewport{scroll-padding-bottom:100px}
+@media(max-width:700px){
+  #dock{gap:8px}
+  .fab{width:46px;height:46px;padding:0;justify-content:center;border-radius:50%}
+  .fab .lbl,.fab .chev{display:none}
+  .btn.lucky.sm,.kk{display:none}
+  .fbot{padding-bottom:120px}
+}
+@media(max-height:560px){#dock{flex-direction:row;align-items:center}#rmenu{position:absolute;bottom:56px;right:0}}
 </style>
 </head>
 <body>
@@ -399,9 +436,10 @@ h2.st{margin-top:30px}
   <div id="loadbar"></div><div id="sprog"></div><div id="viewport"></div>
 </div>
 <div id="veil"></div><div id="curtain"></div>
-<div id="dock"><div id="rmenu"><button onclick="viewResume()"><i class="fa-regular fa-eye"></i> View resume</button><button onclick="downloadResume()"><i class="fa-solid fa-file-arrow-down"></i> Download resume</button></div>
-<button class="fab res" id="resfab"><i class="fa-solid fa-file-lines"></i> Resume <i class="fa-solid fa-chevron-up" style="font-size:10px"></i></button>
-<button class="fab hire" onclick="hireMe()"><i class="fa-solid fa-envelope"></i> Hire me</button></div>
+<div id="dock" role="group" aria-label="Quick actions"><div id="rmenu"><button onclick="viewResume()"><i class="fa-regular fa-eye"></i> View resume</button><button onclick="downloadResume()"><i class="fa-solid fa-file-arrow-down"></i> Download resume</button></div>
+<button class="fab res" id="resfab" aria-label="Resume options" aria-haspopup="true"><i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="lbl">Resume</span><i class="fa-solid fa-chevron-up chev" aria-hidden="true"></i></button>
+<button class="fab hire" onclick="hireMe()" aria-label="Hire me – send an email"><i class="fa-solid fa-envelope" aria-hidden="true"></i><span class="lbl">Hire me</span></button>
+<a class="fab wa" href="https://wa.me/919345687479?text=Hi%20Eswari%2C%20I%20saw%20your%20portfolio." target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i><span class="lbl">WhatsApp</span></a></div>
 <div id="rm"><div class="rmbox"><div class="rmh"><b><i class="fa-solid fa-file-pdf" style="color:#ea4335"></i> Resume – ESWARI L R</b><span><a class="pbtn primary sm" href="assets/Eswari_L_R_Resume.pdf" download="Eswari_L_R_Resume.pdf"><i class="fa-solid fa-file-arrow-down"></i> Download</a><a class="pbtn sm" href="assets/Eswari_L_R_Resume.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-up-right-from-square"></i> New tab</a><button class="iconbtn" onclick="closeResume()"><i class="fa-solid fa-xmark"></i></button></span></div><iframe id="rmf" title="Resume"></iframe></div></div><button id="totop" title="Back to top"><i class="fa-solid fa-chevron-up"></i></button><div id="menu"></div>
 <div id="lb"><button class="cl" onclick="closeLb()"><i class="fa-solid fa-xmark"></i></button><button class="pv" onclick="stepLb(-1)"><i class="fa-solid fa-chevron-left"></i></button><button class="nx" onclick="stepLb(1)"><i class="fa-solid fa-chevron-right"></i></button><img id="lbimg" alt=""><div class="cap" id="lbcap"></div></div>
 <div id="toast"></div>
@@ -523,6 +561,111 @@ INDEX.push({title:'Download Resume (PDF)',desc:'Download the latest resume of Es
 INDEX.push({title:'Email Eswari',desc:'eswarigeetha2005@gmail.com',ext:LINKS.email,icon:'fa-envelope',color:'#ea4335',kw:'mail gmail contact',type:'Contact',url:'mailto'});
 INDEX.push({title:'Phone',desc:'+91 9345687479',path:'/contact',icon:'fa-phone',color:'#34a853',kw:'call mobile number',type:'Contact',url:HOST+'/contact'});
 
+
+/* ================== SMART QUERY PARSER & SEARCH ENGINE ================== */
+/* Featured projects used by "I'm Feeling Lucky" (ids from PROJECTS). Edit this list to change the pool. */
+const FEATURED_IDS=['dropsaviors','dev-metrics','ultravox-voice','guardian-eyes','meditracker'];
+const POPULAR_TERMS=['AI','React','Python','Hackathon','Flask','Java','YOLO','Machine Learning'];
+const SE=(()=>{
+  const STOP=new Set(('a an the and or of to in on at for from by with about as is are was were be been being do does did doing done has have had having can could would should will may might shall i me my we you your she her hers he his him they them their it its this that these those any some all every each please show list tell give find get see display what which who whom whose where when why how there here also just only really very much many more most other another such than then so if into over under out up down off not no nor yet but whether work works worked working built build builds building made make makes making created create creates creating developed develop developing use used uses using utilise utilize implement implemented implementing know knows known experience experienced eswari eswaris lr portfolio s t l r d ll ve re m').split(' '));
+  const GENERIC=new Set(['project','projects','app','apps','application','applications','website','websites','site','sites','software']);
+  const WIN=new Set(['won','win','wins','winning','winner','winners','award','awards','awarded','achievement','achievements','achieved','secured','accomplishment','accomplishments']);
+  const ORD={first:'1st',second:'2nd',third:'3rd',fourth:'4th',fifth:'5th'};
+  const SYN={ml:'machine learning',cv:'computer vision',js:'javascript',reactjs:'react',nodejs:'node',expressjs:'express',py:'python',fullstack:'full stack',webdev:'web development',hackathons:'hackathon'};
+  const PHR={'machine learning':'machine learning','web development':'web development','computer vision':'computer vision','full stack':'full stack','artificial intelligence':'ai','voice ai':'voice ai','rest api':'rest api','rest apis':'rest api','data science':'data science','web utility':'web utility','web utilities':'web utility','live deployed':'live deployed','web dev':'web development','scikit learn':'scikit learn','real time':'real time'};
+  const PHRASES=Object.keys(PHR).sort((a,b)=>b.length-a.length);
+  const KEEP=new Set(['ai','css','express','analytics','canvas','ios','status']);
+  const TECH_TAGS={yolo:['computer vision','machine learning','ai'],opencv:['computer vision'],'scikit learn':['machine learning','ai'],pandas:['data science'],numpy:['data science'],flask:['python','web development','backend'],react:['javascript','frontend','web development'],html:['web development','frontend'],css:['web development','frontend'],javascript:['web development','frontend'],node:['javascript','backend','web development'],express:['node','backend'],mysql:['database','sql'],fasthtml:['python','web development'],'ultravox api':['voice ai','ai'],'ultravox realtime api':['voice ai','ai'],'voice ai':['ai'],'real time inference':['computer vision','real time'],'rest api':['api','backend','web development'],'geospatial analytics':['data science'],'dora metrics':['analytics'],analytics:['data science']};
+  const CAT_TAGS={live:['live deployed','deployed'],ai:['ai'],fullstack:['full stack'],utility:['web utility','web development'],java:['java']};
+  const esc2=x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  const norm=t=>String(t==null?'':t).toLowerCase().replace(/\.js\b/g,'').replace(/[’']/g,' ').replace(/[^a-z0-9+#]+/g,' ').trim();
+  const stem=w=>{if(KEEP.has(w))return w;if(w.length>4&&w.endsWith('ies'))return w.slice(0,-3)+'y';if(w.length>3&&w.endsWith('s')&&!/(ss|us|is)$/.test(w))return w.slice(0,-1);return w};
+  const wordRe=t=>new RegExp('(^| )'+esc2(t)+'(s|es)?( |$)');
+  const techMatch=(tech,t)=>tech===t||tech===t+'s'||tech.split(' ').some(x=>x===t||x===t+'s'||x===t+'es');
+  function parse(raw){
+    let s=' '+norm(raw)+' ';const terms=[],mk={project:false,win:false};
+    PHRASES.forEach(p=>{const k=' '+p+' ';if(s.includes(k)){terms.push(PHR[p]);s=s.split(k).join(' ')}});
+    s.split(' ').forEach(w=>{
+      if(!w)return;w=ORD[w]||w;w=SYN[w]||w;
+      if(w.indexOf(' ')>-1){terms.push(w);return}
+      if(STOP.has(w))return;if(GENERIC.has(w)){mk.project=true;return}if(WIN.has(w)){mk.win=true;return}
+      if(w.length<2&&!/\d/.test(w))return;terms.push(stem(w))});
+    return {raw:String(raw||''),terms:[...new Set(terms)],markers:mk};
+  }
+  const mkRec=o=>{const tags=new Set(o.tags||[]);const words=new Set([o.title,o.sub||'',o.desc,...(o.tech||[]),...tags].join(' ').split(' ').filter(Boolean));return Object.assign({sub:'',tech:[]},o,{tags,words:[...words]})};
+  let _P=null,_A=null,_K=null;
+  function projRecs(){return _P||(_P=PROJECTS.map((p,i)=>{
+    const tech=p.tech.map(norm);const tags=[];
+    p.cat.split(' ').forEach(c=>(CAT_TAGS[c]||[c]).forEach(x=>tags.push(x)));tags.push(norm(p.badge));
+    tech.forEach(t=>(TECH_TAGS[t]||[]).forEach(x=>tags.push(x)));
+    return mkRec({kind:'project',idx:i,p,title:norm(p.name),sub:norm(p.tag),desc:norm(p.desc),tech,tags})}))}
+  function achRecs(){return _A||(_A=[].concat(
+    ACHIEVEMENTS.map((a,i)=>mkRec({kind:'prize',idx:i,view:{title:`${a.t} – <span style="color:${a.c}">${esc(a.r)}</span>`,desc:a.d,icon:a.i,color:a.c,label:'Prize'},title:norm(a.t+' '+a.r),desc:norm(a.d),tags:['prize','award','achievement',...norm(a.r).split(' ')]})),
+    [mkRec({kind:'publication',idx:50,view:{title:'“Smart Health Monitoring and Medication Reminder Application” – IJSRET',desc:'Published research paper on full-stack health telemetry, patient query optimization and automated medication alert pipelines.',icon:'fa-book-open',color:'#4285f4',label:'Publication'},title:norm('Smart Health Monitoring and Medication Reminder Application IJSRET'),desc:norm('Published author research paper full-stack health telemetry patient query optimization automated medication alert pipelines'),tags:['publication','published','paper','research','ijsret']})],
+    CERTS.map((a,i)=>mkRec({kind:/participant/i.test(a.t)?'participation':'certification',idx:100+i,view:{title:a.t,desc:a.d,icon:a.i,color:a.c,label:/participant/i.test(a.t)?'Participation':'Certification'},title:norm(a.t),desc:norm(a.d),tags:/participant/i.test(a.t)?['participation','participant']:['certification','certificate']}))))}
+  function known(){if(_K)return _K;_K=new Set();[...projRecs(),...achRecs()].forEach(r=>{r.tech.forEach(t=>t.split(' ').forEach(x=>_K.add(x)));r.tags.forEach(t=>_K.add(t))});return _K}
+  function score(rec,terms,prefix){
+    let total=0;
+    for(const t of terms){let s=0;
+      if(rec.tech.some(x=>techMatch(x,t)))s=100;
+      else if(rec.tags.has(t))s=90;
+      else if(wordRe(t).test(rec.title))s=70;
+      else if(rec.sub&&wordRe(t).test(rec.sub))s=55;
+      else if(wordRe(t).test(rec.desc))s=30;
+      else if(prefix&&t.length>=4&&!known().has(t)&&rec.words.some(w=>w.startsWith(t)))s=12;
+      if(!s)return 0;total+=s}
+    return total}
+  function run(raw){
+    const t0=performance.now();const pq=parse(raw),terms=pq.terms,mk=pq.markers;
+    const wantP=!(mk.win&&!mk.project),wantA=!(mk.project&&!mk.win);
+    const pass=pre=>{
+      const P=wantP?projRecs().map(r=>({r,s:terms.length?score(r,terms,pre):(mk.project?1:0)})).filter(x=>x.s>0):[];
+      const A=wantA?achRecs().filter(r=>!mk.win||r.kind==='prize').map(r=>({r,s:terms.length?score(r,terms,pre):(mk.win?1:0)})).filter(x=>x.s>0):[];
+      return {P,A}};
+    let o=pass(false);if(!o.P.length&&!o.A.length&&terms.length)o=pass(true);
+    const srt=(a,b)=>b.s-a.s||a.r.idx-b.r.idx;o.P.sort(srt);o.A.sort(srt);
+    return {parsed:pq,terms,markers:mk,projects:o.P.map(x=>x.r.p),achievements:o.A.map(x=>x.r),count:o.P.length+o.A.length,elapsed:(performance.now()-t0)/1000};
+  }
+  let _pool=null;
+  function pool(){
+    if(_pool)return _pool;const c=[],seen=new Set();
+    PROJECTS.forEach(p=>c.push({title:p.name,url:p.tag,type:'Project',query:p.name,w:3}));
+    PROJECTS.forEach(p=>p.tech.forEach(t=>{const k=norm(t);if(seen.has(k))return;seen.add(k);const label=t.replace(/\.js$/i,'');const n=run(label).count;if(n)c.push({title:label,url:n+' result'+(n>1?'s':''),type:'Technology',query:label,w:4})}));
+    [['AI','ai','Category'],['Machine Learning','machine learning','Category'],['Computer Vision','computer vision','Category'],['Web Development','web development','Category'],['Full Stack','full stack','Category'],['Data Science','data science','Category'],['Live Deployed','live deployed','Category'],['Web Utility','web utility','Category'],['Hackathon','hackathon','Achievement']].forEach(([l,q,ty])=>{if(seen.has(norm(l)))return;seen.add(norm(l));const n=run(q).count;if(n)c.push({title:l,url:n+' result'+(n>1?'s':''),type:ty,query:q,w:3})});
+    ACHIEVEMENTS.forEach(a=>c.push({title:a.t+' – '+a.r,url:'Achievement',type:'Achievement',query:a.t,w:2}));
+    CERTS.forEach(a=>c.push({title:a.t,url:'Certification / participation',type:'Achievement',query:a.t,w:2}));
+    return _pool=c}
+  function suggest(q){
+    const nq=norm(q);if(!nq)return[];const pq=parse(q);const out=new Map();
+    const add=(c,s)=>{const k=c.type+c.title;if(!out.has(k)||out.get(k).s<s)out.set(k,{c,s})};
+    pool().forEach(c=>{const l=norm(c.title);let s=0;
+      if(l.startsWith(nq))s=100;else if(l.split(' ').some(w=>w.startsWith(nq)))s=80;else if(l.includes(nq))s=60;else if(pq.terms.length&&pq.terms.some(t=>l.includes(t)))s=35;
+      if(s)add(c,s+c.w)});
+    if(pq.terms.length){run(q).projects.slice(0,3).forEach(p=>add({title:p.name,url:p.tag,type:'Project',query:p.name,w:3},45))}
+    return [...out.values()].sort((a,b)=>b.s-a.s).slice(0,8).map(x=>x.c)}
+  return {parse,run,suggest,norm,pool};
+})();
+function isValidUrl(u){try{const x=new URL(u);return (x.protocol==='https:'||x.protocol==='http:')&&x.hostname.includes('.')&&!/example\.|localhost|placeholder|your-/i.test(x.hostname)}catch(e){return false}}
+let _lucky=null;
+function feelLucky(){
+  const pool=FEATURED_IDS.map(id=>PROJECTS.find(p=>p.id===id)).filter(Boolean);
+  if(!pool.length){toast('No featured projects configured');return}
+  let c=pool.filter(p=>p.id!==_lucky);if(!c.length)c=pool;
+  const p=c[Math.floor(Math.random()*c.length)];_lucky=p.id;
+  document.querySelectorAll('.lucky').forEach(b=>{b.classList.remove('rolling');void b.offsetWidth;b.classList.add('rolling')});
+  if(isValidUrl(p.live)){const w=window.open(p.live,'_blank');if(w){try{w.opener=null}catch(e){}toast('Feeling lucky → '+p.name);return}}
+  go('/projects/'+p.id);toast('Feeling lucky → '+p.name);
+}
+function runSearch(raw){
+  const q=String(raw||'').trim();
+  if(!q){go('/projects');return}
+  pushRecent(q);
+  const R=SE.run(q);
+  if(!R.count){const hits=search(R.terms.length?R.terms.join(' '):q).filter(e=>!['Project','Award','Cert','Live'].includes(e.type));if(hits.length){go('/search?q='+encodeURIComponent(q));return}}
+  go('/projects?q='+encodeURIComponent(q));
+}
+function clearSearch(){go('/projects')}
+
 /* ================== HELPERS ================== */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -531,8 +674,8 @@ function colorize(t){let i=0;return [...t].map(ch=>ch.trim()?`<span style="color
 let TIMERS=[];let CLEAN=[];function clearTimers(){TIMERS.forEach(t=>{clearInterval(t);clearTimeout(t)});TIMERS=[];CLEAN.forEach(f=>f());CLEAN=[]}
 const MAILTO='mailto:eswarigeetha2005@gmail.com?subject='+encodeURIComponent('Hiring Opportunity – ESWARI L R')+'&body='+encodeURIComponent('Hi Eswari,\n\nI came across your portfolio and would like to discuss an opportunity with you.\n\nRole / Company:\nMessage:\n\nRegards,');
 function hireMe(){location.href=MAILTO;toast('Opening your email app to hire Eswari…')}
-function viewResume(){$('#rmf').src=RESUME+'#toolbar=1';$('#rm').classList.add('open');$('#rmenu').classList.remove('open')}
-function closeResume(){$('#rm').classList.remove('open');$('#rmf').src='about:blank'}
+function viewResume(){$('#rmf').src=RESUME+'#toolbar=1';$('#rm').classList.add('open');$('#rmenu').classList.remove('open');document.body.classList.add('noscroll')}
+function closeResume(){$('#rm').classList.remove('open');$('#rmf').src='about:blank';document.body.classList.remove('noscroll')}
 function downloadResume(){const a=document.createElement('a');a.href=RESUME;a.download='Eswari_L_R_Resume.pdf';document.body.appendChild(a);a.click();a.remove();toast('Downloading resume…')}
 function copyText(t){(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Copied: '+t)).catch(()=>toast(t))}
 function ic(i){return i.includes(' ')?i:'fa-solid '+i}
@@ -551,42 +694,54 @@ function openEntry(e){if(e.title)pushRecent(e.title);if(e.dl)downloadResume();el
 function recents(){try{const r=JSON.parse(localStorage.getItem('recent_searches')||'null');if(r)return r}catch(e){}return ['Projects','Achievements','Contact','Skills']}
 function pushRecent(t){try{const r=recents().filter(x=>x!==t);r.unshift(t);localStorage.setItem('recent_searches',JSON.stringify(r.slice(0,4)))}catch(e){}}
 function veil(on){const v=$('#veil');v.style.top=$('#viewport').getBoundingClientRect().top+'px';v.classList.toggle('on',on)}
+function hlQ(t,q){const pq=SE.parse(q);return hl(t,(pq.terms.length&&q.trim().split(/\s+/).length>2?pq.terms.join(' '):q))}
 function attachSuggest(input,box,wrap,perm){
   wrap=wrap||box;let sel=-1,items=[];
+  input.setAttribute('role','combobox');input.setAttribute('aria-autocomplete','list');input.setAttribute('aria-haspopup','listbox');input.setAttribute('aria-expanded','false');input.setAttribute('aria-controls',box.id);
+  if(!input.getAttribute('aria-label'))input.setAttribute('aria-label','Search projects, skills and achievements');
+  const ICON={Project:'fa-folder-open',Technology:'fa-microchip',Category:'fa-layer-group',Achievement:'fa-trophy',Search:'fa-clock-rotate-left'};
+  function row(x,i,icon,q){const e=x.e;return `<div class="sg ${i===sel?'sel':''} ${icon==='fa-clock-rotate-left'?'rc':''}" role="option" id="${box.id}-o${i}" aria-selected="${i===sel}" data-i="${i}"><i class="l fa-solid ${icon}" aria-hidden="true"></i><div class="t">${hlQ(e.title,q)}<small>${esc(e.url||'')}</small></div><span class="tag">${e.type}</span></div>`}
   function build(){
     const q=input.value.trim();let h='';
-    const row=(x,i,icon)=>`<div class="sg ${i===sel?'sel':''} ${icon==='fa-clock-rotate-left'?'rc':''}" data-i="${i}"><i class="l fa-solid ${icon}"></i><div class="t">${hl(x.e.title,q)}<small>${esc(x.e.url)}</small></div><span class="tag">${x.e.type}</span></div>`;
     if(!q){
-      const rec=recents().map(t=>INDEX.find(e=>e.title===t)).filter(Boolean).map(e=>({e}));
+      const rec=recents().map(t=>INDEX.find(e=>e.title===t)||{title:t,url:'recent search',type:'Search',query:t}).map(e=>({e}));
       const rs=new Set(rec.map(x=>x.e.title));
-      const rest=INDEX.filter(e=>(e.type==='Page'||e.type==='Project'||e.type==='Resume')&&!rs.has(e.title)).slice(0,10).map(e=>({e}));
+      const rest=INDEX.filter(e=>(e.type==='Page'||e.type==='Project'||e.type==='Resume')&&!rs.has(e.title)).slice(0,8).map(e=>({e}));
       items=rec.concat(rest);
-      h+='<div class="sg-head recent"><i class="fa-solid fa-clock-rotate-left"></i> Recent in this portfolio <em>(not your browser history)</em></div>'+rec.map((x,i)=>row(x,i,'fa-clock-rotate-left')).join('');
-      h+='<div class="sg-head">Browse my portfolio</div>'+rest.map((x,i)=>row(x,rec.length+i,'fa-compass')).join('');
+      h+='<div class="sg-head recent"><i class="fa-solid fa-clock-rotate-left"></i> Recent in this portfolio <em>(not your browser history)</em></div>'+rec.map((x,i)=>row(x,i,'fa-clock-rotate-left',q)).join('');
+      h+='<div class="sg-head">Browse my portfolio</div>'+rest.map((x,i)=>row(x,rec.length+i,'fa-compass',q)).join('');
     }else{
-      items=search(q).slice(0,8).map(e=>({e}));
-      h+=items.map((x,i)=>row(x,i,'fa-magnifying-glass')).join('');
-      items.push({q:1});
-      h+=`<div class="sg ${items.length-1===sel?'sel':''}" data-i="${items.length-1}"><i class="l fa-solid fa-arrow-right"></i><div class="t">Search all for <b>“${esc(q)}”</b></div></div>`;
+      const pq=SE.parse(q);const cands=SE.suggest(q);
+      const nav=search(pq.terms.length?pq.terms.join(' '):q).filter(e=>!['Project','Award','Cert','Live'].includes(e.type)).slice(0,2);
+      items=cands.slice(0,8-nav.length).map(c=>({e:c})).concat(nav.map(e=>({e})));
+      h+=items.map((x,i)=>row(x,i,ICON[x.e.type]||'fa-compass',q)).join('');
+      if(!items.length)h+=`<div class="sg nores" role="presentation"><i class="l fa-regular fa-face-meh" aria-hidden="true"></i><div class="t">No suggestions for “${esc(q)}”</div></div>`;
+      const note=pq.terms.length?`Looking for: ${esc(pq.terms.join(', '))}${pq.markers.project?' · projects':''}${pq.markers.win?' · awards':''}`:'';
+      items.push({q:1});const li=items.length-1;
+      h+=`<div class="sg ${li===sel?'sel':''}" role="option" id="${box.id}-o${li}" aria-selected="${li===sel}" data-i="${li}"><i class="l fa-solid fa-arrow-right" aria-hidden="true"></i><div class="t">Search for <b>“${esc(q)}”</b>${note?`<small>${note}</small>`:''}</div><span class="tag">Enter</span></div>`;
     }
-    box.innerHTML='<div class="sg-list">'+h+'</div>';
+    box.innerHTML='<div class="sg-list" role="listbox" aria-label="Search suggestions">'+h+'</div>';
+    input.setAttribute('aria-activedescendant',sel>=0?`${box.id}-o${sel}`:'');
   }
-  function render(){build();box.classList.add('open');wrap.classList.add('open');veil(true)}
-  function close(){box.classList.remove('open');wrap.classList.remove('open');veil(false);sel=-1}
-  function choose(x){if(x.q){go('/search?q='+encodeURIComponent(input.value.trim()))}else openEntry(x.e);input.value=input.id==='addr'?input.value:'';close();input.blur()}
+  function render(){build();box.classList.add('open');wrap.classList.add('open');input.setAttribute('aria-expanded','true');veil(true)}
+  function close(){box.classList.remove('open');wrap.classList.remove('open');input.setAttribute('aria-expanded','false');veil(false);sel=-1}
+  function choose(x){
+    const q=input.value.trim();
+    if(x.q)runSearch(q);else if(x.e.query!=null)runSearch(x.e.query);else openEntry(x.e);
+    close();input.blur()}
   input.addEventListener('focus',()=>{if(input.id==='addr')input.select();render()});
   input.addEventListener('click',()=>{if(!box.classList.contains('open'))render()});
   input.addEventListener('input',()=>{sel=-1;render()});
   input.addEventListener('keydown',ev=>{
-    if(ev.key==='ArrowDown'){ev.preventDefault();sel=Math.min(items.length-1,sel+1);build();scrollSel()}
+    if(ev.key==='ArrowDown'){ev.preventDefault();if(!box.classList.contains('open'))render();sel=Math.min(items.length-1,sel+1);build();scrollSel()}
     else if(ev.key==='ArrowUp'){ev.preventDefault();sel=Math.max(-1,sel-1);build();scrollSel()}
     else if(ev.key==='Escape'){close();input.blur()}
     else if(ev.key==='Enter'){ev.preventDefault();const q=input.value.trim();
       if(sel>=0&&items[sel]){choose(items[sel])}
-      else if(q){const direct=Object.keys(PAGES).find(k=>q.replace(/^https?:\/\/|^eswari\.portfolio/,'')===k);
-        if(direct)go(direct);else go('/search?q='+encodeURIComponent(q));close();input.blur()}}});
+      else{const direct=Object.keys(PAGES).find(k=>k!=='/'&&q.replace(/^https?:\/\/|^eswari\.portfolio/,'')===k);
+        if(direct)go(direct);else runSearch(q);close();input.blur()}}});
   function scrollSel(){const el=box.querySelector('.sg.sel');if(el)el.scrollIntoView({block:'nearest'})}
-  box.addEventListener('mousedown',ev=>{const r=ev.target.closest('.sg');if(!r)return;ev.preventDefault();choose(items[+r.dataset.i])});
+  box.addEventListener('mousedown',ev=>{const r=ev.target.closest('.sg[data-i]');if(!r)return;ev.preventDefault();choose(items[+r.dataset.i])});
   const dl=ev=>{if(!wrap.contains(ev.target)&&box.classList.contains('open'))close()};document.addEventListener('mousedown',dl);if(!perm)CLEAN.push(()=>document.removeEventListener('mousedown',dl));
   return {close};
 }
@@ -607,10 +762,10 @@ function pageHome(){
     <div class="hav"><img src="assets/eswari.jpg" alt="Eswari L R"></div>
     <div class="logo">${colorize('ESWARI L R')}</div>
     <div class="roles">${colorize('FULL STACK')}<span class="bar" style="color:#34a853">|</span>${colorize('Software Developer')}</div>
-    <div class="homesearch" id="hsw"><div class="hs"><i class="fa-solid fa-magnifying-glass"></i><input id="hsin" placeholder="Search projects, skills, contact…" autocomplete="off"><i class="fa-solid fa-microphone" id="mic" style="color:#4285f4;cursor:pointer" title="Voice search"></i></div><div class="suggest" id="sg-home"></div></div>
-    <div class="hbtns"><button class="btn" onclick="go('/profile')">About Me</button><button class="btn" onclick="go('/projects')">View Projects</button><button class="btn dl" onclick="downloadResume()"><i class="fa-solid fa-file-arrow-down"></i> Download Resume</button><button class="btn" onclick="viewResume()"><i class="fa-regular fa-eye"></i> View Resume</button><button class="btn hirebtn" onclick="hireMe()"><i class="fa-solid fa-envelope"></i> Hire me</button></div>
+    <div class="homesearch" id="hsw"><div class="hs"><i class="fa-solid fa-magnifying-glass"></i><input id="hsin" placeholder="Search projects, skills, contact…" autocomplete="off" aria-label="Search projects, skills and achievements"><kbd class="kk" title="Press / or Ctrl+K to search">/</kbd><i class="fa-solid fa-microphone" id="mic" style="color:#4285f4;cursor:pointer" title="Voice search"></i></div><div class="suggest" id="sg-home"></div></div>
+    <div class="hbtns"><button class="btn" onclick="go('/profile')">About Me</button><button class="btn" onclick="go('/projects')">View Projects</button><button class="btn dl" onclick="downloadResume()"><i class="fa-solid fa-file-arrow-down"></i> Download Resume</button><button class="btn" onclick="viewResume()"><i class="fa-regular fa-eye"></i> View Resume</button><button class="btn hirebtn" onclick="hireMe()"><i class="fa-solid fa-envelope"></i> Hire me</button><button class="btn lucky" onclick="feelLucky()" title="Open a random featured project"><i class="fa-solid fa-dice" aria-hidden="true"></i> I'm Feeling Lucky</button></div>
     <div class="results">
-      <div class="rhead">About ${INDEX.length} results (0.42 seconds) · portfolio of Eswari L R</div>
+      <div class="rhead">${INDEX.length} pages, projects &amp; links · portfolio of Eswari L R</div>
       ${pick.map(resCard).join('')}
       <div class="rhead">Resume</div>${res.map(resCard).join('')}
       <div class="rhead">Live websites</div>
@@ -639,7 +794,8 @@ function gres(o){
    ${o.chips?`<div class="gchips">${o.chips.map((c,i)=>`<span class="chip pop" style="--i:${i}">${c}</span>`).join('')}</div>`:''}
    ${o.actions?`<div class="gactions">${o.actions}</div>`:''}</div>${o.thumb?`<div class="grthumb tilt">${o.thumb}</div>`:''}</article>`}
 function paa(qs){return `<div class="paa"><h3>People also ask</h3>${qs.map(q=>`<div class="pq"><button class="pqb"><span>${q[0]}</span><i class="fa-solid fa-chevron-down"></i></button><div class="pqa"><div>${q[1]}</div></div></div>`).join('')}</div>`}
-function gstat(n){return `<div class="gstat">About ${n} results (0.${30+n} seconds)</div>`}
+const fmtSec=x=>x<0.001?'< 0.001':x.toFixed(3);
+function gstat(n,sec){return `<div class="gstat">About ${n} result${n===1?'':'s'}${sec!=null?` (${fmtSec(sec)} seconds)`:''}</div>`}
 function carouselX(items,name,ms){
   const n=items.length;
   return `<div class="carwrap"><div class="car" data-name="${esc(name)}" data-ms="${ms||3000}"><div class="slides">${items.map((it,k)=>`<img src="${it.src}" class="${k?'':'on'}" alt="${esc(it.title)}">`).join('')}</div>
@@ -647,12 +803,12 @@ function carouselX(items,name,ms){
    <div class="ccap">${esc(items[0].title)}</div><span class="cnt">1 / ${n}</span><span class="zoom"><i class="fa-solid fa-expand"></i> click to enlarge</span></div>
    ${n>1?`<div class="strip">${items.map((it,k)=>`<img src="${it.src}" class="${k?'':'on'}" alt="">`).join('')}</div>`:''}</div>`}
 function pageSearch(q){
-  const r=search(q);
-  return `${gstat(r.length)}<div class="rhead" style="margin:0 0 14px">Results for “${esc(q)}”</div>${r.length?r.map(e=>gres({title:esc(e.title),desc:esc(e.desc),url:e.url,icon:e.icon,full:!!e.fullicon,color:e.color,site:'ESWARI L R · '+e.type,href:e.ext?e.ext:'#'+e.path,ext:e.ext&&!e.ext.startsWith('mailto')&&!e.dl})).join(''):'<div class="empty"><i class="fa-regular fa-face-frown fa-2x"></i><p>No results. Try “react”, “hackathon”, “java”, “contact”…</p></div>'}`}
+  const t0=performance.now();const r=search(q);const sec=(performance.now()-t0)/1000;
+  return `${gstat(r.length,sec)}<div class="rhead" style="margin:0 0 14px">Results for “${esc(q)}”</div>${r.length?r.map(e=>gres({title:esc(e.title),desc:esc(e.desc),url:e.url,icon:e.icon,full:!!e.fullicon,color:e.color,site:'ESWARI L R · '+e.type,href:e.ext?e.ext:'#'+e.path,ext:e.ext&&!e.ext.startsWith('mailto')&&!e.dl})).join(''):'<div class="empty"><i class="fa-regular fa-face-frown fa-2x"></i><p>No results. Try “react”, “hackathon”, “java”, “contact”…</p></div>'}`}
 function pageProfile(){
   const sum='Pre-final year Information Technology student with solid foundations in Python, Machine Learning, Data Structures and API development. Experienced in building computer vision models with YOLO and OpenCV, data modeling using Pandas and NumPy, full-stack development, and deploying real-time voice-driven AI interfaces using FastHTML and REST APIs.';
   const rel=['/skills','/experience','/education','/projects','/achievements','/contact'];
-  return `${gstat(9)}
+  return `
   <div class="snip rv"><div class="snipq">Who is ESWARI L R?</div><p>${sum}</p>
    <div class="gsite" style="margin-top:12px"><span class="gfav" style="color:#4285f4"><i class="fa-solid fa-user"></i></span><div><div class="gname">ESWARI L R</div><div class="gurl">${HOST} › profile</div></div></div><a class="gtitle" href="#/profile">${colorize('FULL STACK | Software Developer')} – Profile</a></div>
   <div class="stats">${[[PROJECTS.length,'Projects built',''],[ACHIEVEMENTS.length,'Competition prizes',''],[2,'Internships',''],[1,'Published paper',''],[8.45,'CGPA','/10']].map(x=>`<div class="stat tilt"><b data-count="${x[0]}">0</b><small>${x[2]}</small><span>${x[1]}</span></div>`).join('')}</div>
@@ -675,10 +831,30 @@ function stack(p,ms){
   if(!p.images.length)return `<div class="tstack" style="display:grid;place-items:center;font-size:44px;color:${p.color}"><i class="${ic(p.icon)}"></i></div>`;
   return `<div class="tstack" data-ms="${ms||1000}">${p.images.map((s,k)=>`<img decoding="async" src="${s}" class="${k?'':'on'}" alt="${esc(p.name)}">`).join('')}${p.images.length>1?`<span class="cnt"><i class="fa-regular fa-images"></i> ${p.images.length}</span>`:''}</div>`}
 function ghLabel(p){return p.gh===LINKS.github?'GitHub profile':'GitHub repo'}
-function pageProjects(){return `${gstat(PROJECTS.length)}
+function projResult(p){return `<div class="proj" data-cat="${p.cat}">${gres({title:p.name+' – '+p.tag,url:HOST+' › projects › '+p.id,icon:p.icon,color:p.color,href:'#/projects/'+p.id,go:'/projects/'+p.id,desc:p.desc,chips:p.tech,thumb:stack(p,1000),
+   actions:`<a class="pbtn sm primary clickme" href="#/projects/${p.id}"><i class="fa-solid fa-hand-pointer"></i>Click me – full details</a>${p.live?`<a class="pbtn sm" href="${p.live}" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Live</a>`:''}<a class="pbtn sm" href="${p.gh}" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i>${ghLabel(p)}</a>`})}</div>`}
+function achResult(r){const v=r.view;return gres({title:v.title,url:HOST+' › achievements',icon:v.icon,color:v.color,href:'#/achievements',go:'/achievements',desc:v.desc,chips:[v.label]})}
+function pageProjectsQuery(raw){
+  const R=SE.run(raw);const P=R.projects,A=R.achievements;
+  const chips=(R.terms.length?R.terms:[raw]).map(t=>`<span class="chip b">${esc(t)}</span>`).join('')+(R.markers.project?'<span class="chip">projects</span>':'')+(R.markers.win?'<span class="chip">prizes &amp; awards</span>':'');
+  let h=`<div class="gstat" id="qcount" aria-live="polite">About ${R.count} result${R.count===1?'':'s'} (${fmtSec(R.elapsed)} seconds)</div>
+   <div class="qbar"><span>Showing results for</span>${chips}<button class="pbtn sm" data-clear="1"><i class="fa-solid fa-xmark"></i>Clear search</button></div>`;
+  if(!R.count){
+    const techs=SE.pool().filter(c=>c.type==='Technology').slice(0,8);
+    const pop=POPULAR_TERMS.filter(t=>SE.run(t).count>0);
+    return h+`<div class="noresult"><i class="fa-regular fa-face-meh fa-2x"></i><h2>No matching results found for “${esc(raw)}”.</h2><p>Try a technology, category or achievement from this portfolio.</p>
+     <div class="nrh">Suggested technologies</div><div class="gchips">${techs.map(t=>`<button class="chip b qchip" data-q="${esc(t.query)}">${esc(t.title)}</button>`).join('')}</div>
+     <div class="nrh">Popular searches</div><div class="gchips">${pop.map(t=>`<button class="chip qchip" data-q="${esc(t)}">${esc(t)}</button>`).join('')}</div>
+     <button class="pbtn primary" data-clear="1" style="margin-top:18px"><i class="fa-solid fa-rotate-left"></i>Clear search &amp; view all projects</button></div>`}
+  if(P.length)h+=`<h2 class="st"><i class="fa-solid fa-laptop-code" style="color:#a855f7"></i>Projects <span class="cc">(${P.length})</span></h2>${P.map(projResult).join('')}`;
+  if(A.length)h+=`<h2 class="st"><i class="fa-solid fa-trophy" style="color:#fbbc05"></i>Achievements &amp; certifications <span class="cc">(${A.length})</span></h2><p class="sub" style="margin-top:-6px">These are achievements and certifications, not projects.</p>${A.map(achResult).join('')}`;
+  return h}
+function pageProjects(){
+  const qs=(parse(location.hash).q.get('q')||'').trim();
+  if(qs)return pageProjectsQuery(qs);
+  return `${gstat(PROJECTS.length)}
  <div class="filters">${[['all','All'],['live','Live Deployed'],['ai','AI / ML'],['fullstack','Full Stack'],['utility','Web Utilities'],['java','Java CLI']].map((f,i)=>`<button class="fbtn ${i?'':'on'}" data-f="${f[0]}">${f[1]}</button>`).join('')}</div>
- <div id="pgrid">${PROJECTS.map(p=>`<div class="proj" data-cat="${p.cat}">${gres({title:p.name+' – '+p.tag,url:HOST+' › projects › '+p.id,icon:p.icon,color:p.color,href:'#/projects/'+p.id,go:'/projects/'+p.id,desc:p.desc,chips:p.tech,thumb:stack(p,1000),
-   actions:`<a class="pbtn sm primary clickme" href="#/projects/${p.id}"><i class="fa-solid fa-hand-pointer"></i>Click me – full details</a>${p.live?`<a class="pbtn sm" href="${p.live}" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Live</a>`:''}<a class="pbtn sm" href="${p.gh}" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i>${ghLabel(p)}</a>`})}</div>`).join('')}</div>`}
+ <div id="pgrid">${PROJECTS.map(projResult).join('')}</div>`}
 function afterProjects(){document.querySelectorAll('.fbtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.fbtn').forEach(x=>x.classList.toggle('on',x===b));const f=b.dataset.f;document.querySelectorAll('.proj').forEach(c=>c.classList.toggle('hidden',f!=='all'&&!c.dataset.cat.split(' ').includes(f)))})}
 function afterProjects(){document.querySelectorAll('.fbtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.fbtn').forEach(x=>x.classList.toggle('on',x===b));const f=b.dataset.f;document.querySelectorAll('.proj').forEach(c=>c.classList.toggle('hidden',f!=='all'&&!c.dataset.cat.split(' ').includes(f)))})}
 
@@ -717,7 +893,7 @@ function initCarousels(){
 }
 function afterProject(id){const p=PROJECTS.find(x=>x.id===id);if(!p)return;document.querySelectorAll('.gal figure').forEach(f=>f.onclick=()=>openLb(p.images.map(s=>({src:s,cap:p.name})),+f.dataset.k))}
 
-function pageAch(){return `${gstat(ACHIEVEMENTS.length+CERTS.length+2)}
+function pageAch(){return `${gstat(ACHIEVEMENTS.length+1+CERTS.length)}
  <div class="snip rv"><div class="snipq">What awards has Eswari L R won?</div><p>1st Prize at HACKNOVA 2K26 and at COMBLAZE 2K25 (Code Debugging &amp; Paper Presentation), 2nd Prize at GENESIS '23 and BIONICS '26, 3rd Prize at GENESIS '26, 5th Prize at Artiverse '25 – and a published research paper in IJSRET.</p></div>
  ${ACHIEVEMENTS.map(a=>gres({title:`${a.t} – <span style="color:${a.c}">${a.r}</span>`,url:HOST+' › achievements',icon:a.i,color:a.c,href:'#/achievements',desc:a.d})).join('')}
  ${gres({title:'“Smart Health Monitoring and Medication Reminder Application” – IJSRET',url:HOST+' › achievements › publication',icon:'fa-book-open',color:'#4285f4',href:'#/achievements',desc:'Published author. Research on full-stack health telemetry, patient query optimization and automated medication alert pipelines; also presented papers at multiple engineering symposiums (2025).'})}
@@ -728,7 +904,7 @@ function pageAch(){return `${gstat(ACHIEVEMENTS.length+CERTS.length+2)}
 function afterAch(){document.querySelectorAll('#achgal figure').forEach(f=>f.onclick=()=>openLb(ACH_IMAGES.map(a=>({src:a.src,cap:a.title})),+f.dataset.k))}
 function pageContact(){
   const rows=[['fa-envelope','#ea4335','Email','eswarigeetha2005@gmail.com','mailto:eswarigeetha2005@gmail.com','Send an email'],['fa-phone','#34a853','Phone','+91 9345687479','tel:+919345687479','Call now'],['fa-brands fa-linkedin-in','#0a66c2','LinkedIn','linkedin.com/in/eswari22092005',LINKS.linkedin,'Open profile'],['fa-brands fa-github','#9aa0a6','GitHub','github.com/Eswari2225',LINKS.github,'Open GitHub'],['fa-solid fa-code','#fbbc05','LeetCode','leetcode.com/u/EswariLR',LINKS.leetcode,'Open LeetCode']];
-  return `${gstat(rows.length+1)}
+  return `${gstat(rows.length)}
   <div class="snip rv" style="border-left-color:#34a853"><div class="snipq">How can I hire or contact Eswari L R?</div><p>Click <b>Hire me</b> to open a ready-written email to eswarigeetha2005@gmail.com, call +91 9345687479, or use the form below. She is based in Trichy, Tamil Nadu and open to Software Development opportunities &amp; collaborations.</p>
    <div class="gactions" style="margin-top:12px"><button class="pbtn primary hirepulse" onclick="hireMe()"><i class="fa-solid fa-envelope"></i>Hire me</button><a class="pbtn" href="${RESUME}" download="Eswari_L_R_Resume.pdf"><i class="fa-solid fa-file-arrow-down"></i>Download resume</a><button class="pbtn" onclick="viewResume()"><i class="fa-regular fa-eye"></i>View resume</button></div></div>
   ${rows.map(r=>gres({title:r[2]+' – '+r[3],url:HOST+' › contact',icon:r[0].includes(' ')?r[0]:'fa-solid '+r[0],full:true,color:r[1],href:r[4],ext:r[4].startsWith('http'),desc:'',actions:`<a class="pbtn sm" href="${r[4]}" ${r[4].startsWith('http')?'target="_blank" rel="noopener"':''}>${r[5]}</a>${r[2]==='Email'?`<button class="pbtn sm" onclick="copyText('eswarigeetha2005@gmail.com')"><i class="fa-regular fa-copy"></i>Copy</button>`:''}`})).join('')}
@@ -761,11 +937,11 @@ function bigFoot(){
   <div class="fbot"><span>Trichy, Tamil Nadu, India</span><span>© 2026 ESWARI L R · Full Stack | Software Developer</span><a href="javascript:void($('#viewport').scrollTo({top:0,behavior:'smooth'}))">Back to top ↑</a></div></footer>`}
 function shell(inner,path){
   const q=parse(location.hash).q.get('q');
-  const val=path==='/search'?(q||''):'eswari l r '+((PAGES[path]&&PAGES[path].tab)||'').toLowerCase();
+  const val=(path==='/search'||(path==='/projects'&&q))?(q||''):'eswari l r '+((PAGES[path]&&PAGES[path].tab)||'').toLowerCase();
   const act=t=>path.startsWith(t[0]);
   return `<div class="gtop"><div class="gh"><a class="glogo" href="#/">${colorize('ESWARI L R')}</a>
-   <div class="gsearch" id="gsw"><div class="gsbox"><i class="fa-solid fa-magnifying-glass" style="color:var(--muted)"></i><input id="gq" value="${esc(val)}" autocomplete="off" spellcheck="false"><i class="fa-solid fa-microphone" style="color:#4285f4"></i></div><div class="suggest" id="sg-g"></div></div>
-   <div class="gright"><button class="iconbtn" id="gshare" title="Copy link to this page"><i class="fa-solid fa-share-nodes"></i></button>
+   <div class="gsearch" id="gsw"><div class="gsbox"><i class="fa-solid fa-magnifying-glass" style="color:var(--muted)"></i><input id="gq" value="${esc(val)}" autocomplete="off" spellcheck="false" aria-label="Search projects and achievements"><kbd class="kk" title="Press / or Ctrl+K to search">/</kbd><i class="fa-solid fa-microphone" style="color:#4285f4" aria-hidden="true"></i></div><div class="suggest" id="sg-g"></div></div>
+   <div class="gright"><button class="btn lucky sm" onclick="feelLucky()" title="Open a random featured project"><i class="fa-solid fa-dice" aria-hidden="true"></i> I'm Feeling Lucky</button><button class="iconbtn" id="gshare" title="Copy link to this page"><i class="fa-solid fa-share-nodes"></i></button>
    <div style="position:relative"><button class="iconbtn" id="gapps" title="Navigate"><i class="fa-solid fa-grip"></i></button><div class="apps" id="appsmenu">${[['/','fa-house','#4285f4','Home'],...TABS.map(t=>[t[0],PAGES[t[0]].icon,PAGES[t[0]].color,t[1]])].map(a=>`<a href="#${a[0]}"><i class="${ic(a[1])}" style="color:${a[2]}"></i>${a[3]}</a>`).join('')}<a href="javascript:viewResume()"><i class="fa-regular fa-eye" style="color:#ea4335"></i>View CV</a><a href="javascript:hireMe()"><i class="fa-solid fa-envelope" style="color:#34a853"></i>Hire me</a></div></div>
    <img class="gav" src="assets/eswari.jpg" alt="Eswari" onclick="go('/profile')"></div></div>
    <nav class="gtabs"><a href="#/" class="${path==='/search'?'cur':''}"><i class="fa-solid fa-magnifying-glass"></i>All</a>${TABS.map(t=>`<a href="#${t[0]}" class="${act(t)?'cur':''}">${t[1]}</a>`).join('')}</nav></div>
@@ -787,12 +963,18 @@ function initPage(vp){
 }
 /* ================== LIGHTBOX ================== */
 let lbSet=[],lbIdx=0;
-function openLb(set,i){lbSet=set;lbIdx=i;showLb();$('#lb').classList.add('open')}
+function openLb(set,i){lbSet=set;lbIdx=i;showLb();$('#lb').classList.add('open');document.body.classList.add('noscroll')}
 function showLb(){const s=lbSet[lbIdx];$('#lbimg').src=s.src;$('#lbcap').textContent=`${s.cap} · ${lbIdx+1}/${lbSet.length}`}
 function stepLb(d){lbIdx=(lbIdx+d+lbSet.length)%lbSet.length;showLb()}
-function closeLb(){$('#lb').classList.remove('open')}
-document.addEventListener('keydown',e=>{if($('#lb').classList.contains('open')){if(e.key==='Escape')closeLb();if(e.key==='ArrowRight')stepLb(1);if(e.key==='ArrowLeft')stepLb(-1)}
-  else if(e.key==='/'&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();const h=$('#hsin');(h||$('#addr')).focus()}});
+function closeLb(){$('#lb').classList.remove('open');document.body.classList.remove('noscroll')}
+function isTyping(el){if(!el)return false;const t=(el.tagName||'').toUpperCase();return t==='INPUT'||t==='TEXTAREA'||t==='SELECT'||!!el.isContentEditable}
+function focusSearch(){const el=$('#hsin')||$('#gq')||$('#addr');if(!el)return;el.focus({preventScroll:true});if(el.select)el.select();el.dispatchEvent(new Event('click'))}
+document.addEventListener('keydown',e=>{
+  if($('#lb').classList.contains('open')){if(e.key==='Escape')closeLb();if(e.key==='ArrowRight')stepLb(1);if(e.key==='ArrowLeft')stepLb(-1);return}
+  if($('#rm').classList.contains('open'))return;
+  if((e.ctrlKey||e.metaKey)&&!e.altKey&&!e.shiftKey&&String(e.key).toLowerCase()==='k'){e.preventDefault();focusSearch();return}
+  if(e.key==='/'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!isTyping(document.activeElement)){e.preventDefault();focusSearch()}
+});
 $('#lb').addEventListener('click',e=>{if(e.target.id==='lb')closeLb()});
 
 /* ================== BROWSER SHELL ================== */
@@ -800,6 +982,7 @@ let tabs=[{path:'/'}],active='/',bookmarks=new Set(['/profile','/projects']);
 const BM=[['/profile','fa-user','#4285f4','Profile'],['/projects','fa-laptop-code','#a855f7','Projects'],['/achievements','fa-trophy','#fbbc05','Achievements'],['/contact','fa-paper-plane','#34a853','Contact']];
 function parse(h){h=h.replace(/^#/,'')||'/';const [p,q]=h.split('?');return {path:p.replace(/\/$/,'')||'/',q:new URLSearchParams(q||'')}}
 function pageInfo(path,q){
+  if(path==='/projects'&&(q.get('q')||'').trim())return Object.assign({},PAGES['/projects'],{tab:'Projects: '+q.get('q').trim().slice(0,16)});
   if(path==='/search'){const s=q.get('q')||'';return {title:'“'+s+'” – Search',tab:'Search: '+s.slice(0,18),icon:'fa-magnifying-glass',color:'#4285f4'}}
   return PAGES[path]||{title:'Not found',tab:'Not found',icon:'fa-circle-exclamation',color:'#ea4335'}}
 function go(path){if(location.hash.replace(/^#/,'')===path)render();else location.hash=path}
@@ -828,7 +1011,7 @@ function render(){
   else html=page404();
   clearTimers();veil(false);
   vp.innerHTML=path==='/'?html:shell(html,path);vp.scrollTop=0;after&&after();if(path!=='/')afterShell(path);initCarousels();loadStart(t);
-  $('#addr').value=path==='/search'?'google-style search: '+(q.get('q')||''):HOST+(path==='/'?'':path);
+  $('#addr').value=path==='/search'?'google-style search: '+(q.get('q')||''):HOST+(path==='/'?'':path)+((path==='/projects'&&q.get('q'))?'?q='+q.get('q'):'');
   $('#addr').blur();document.title=(t.info.title==='New Tab'?'ESWARI L R | Full Stack Software Developer':t.info.title+' | ESWARI L R');
   $('#lockic').className='fa-solid fa-lock';
   updStar();renderTabs();
@@ -866,7 +1049,7 @@ document.addEventListener('click',e=>{if(!e.target.closest('#menu')&&!e.target.c
 function setTheme(t){document.documentElement.dataset.theme=t;const b=$('#themebtn');b.innerHTML=t==='dark'?'<i class="fa-solid fa-sun"></i><span>Day</span>':'<i class="fa-solid fa-moon"></i><span>Night</span>';b.title=t==='dark'?'Switch to day mode':'Switch to night mode';try{localStorage.setItem('theme',t)}catch(e){}}
 $('#themebtn').onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
 let _th='dark';try{_th=localStorage.getItem('theme')||'dark'}catch(e){}setTheme(_th);
-$('#viewport').addEventListener('click',e=>{const c=e.target.closest('[data-go]');if(c&&!e.target.closest('a,button'))go(c.dataset.go)});
+$('#viewport').addEventListener('click',e=>{const dq=e.target.closest('[data-q]');if(dq){runSearch(dq.dataset.q);return}if(e.target.closest('[data-clear]')){clearSearch();return}const c=e.target.closest('[data-go]');if(c&&!e.target.closest('a,button'))go(c.dataset.go)});
 $('#viewport').addEventListener('scroll',()=>{const v=$('#viewport');const m=v.scrollHeight-v.clientHeight;$('#sprog').style.width=(m>0?v.scrollTop/m*100:0)+'%';$('#totop').classList.toggle('on',v.scrollTop>450)});
 $('#totop').onclick=()=>$('#viewport').scrollTo({top:0,behavior:'smooth'});
 $('#omni').addEventListener('submit',e=>e.preventDefault());
